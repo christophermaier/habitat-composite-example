@@ -1,0 +1,27 @@
+#!/bin/bash
+
+install_last() {
+    source results/last_build.env
+    hab pkg install results/${pkg_artifact}
+}
+
+rebuild_node_app() {
+  build sample-node-app
+  install_last
+}
+
+rebuild_proxy() {
+  build composite-example-api-proxy
+  install_last
+}
+
+rebuild_composite() {
+  build composite-example
+  install_last
+}
+
+rebuild_all() {
+  rebuild_node_app && \
+  rebuild_proxy && \
+  rebuild_composite
+}
